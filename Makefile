@@ -8,7 +8,7 @@ all: build run
 
 # Build the Docker image
 build:
-	docker build -t $(APP_NAME) .
+	docker build --no-cache -t $(APP_NAME) .
 
 # Run the application with Docker Compose
 run:
@@ -33,7 +33,7 @@ clean:
 
 # Build and run without Docker Compose
 build-run:
-	docker build -t $(APP_NAME) .
+	docker build --no-cache -t $(APP_NAME) .
 	docker run -d -p 5174:5174 --name $(APP_NAME) $(APP_NAME)
 
 # Run npm commands inside the container

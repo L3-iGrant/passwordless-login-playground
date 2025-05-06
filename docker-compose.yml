@@ -2,9 +2,13 @@ version: '3.8'
 
 services:
   app:
+    image: passwordless-login
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: 0
+      no_cache: true
     ports:
       - "5174:5174"
     # If you need environment variables, uncomment and add them
