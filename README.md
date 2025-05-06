@@ -14,6 +14,7 @@
   <a href="#docker-support">Docker Support</a> •
   <a href="#implementation-guide-passwordless-login-with-eudi-wallets">Implementation Guide</a> •
   <a href="#development-setup">Development Setup</a> •
+  <a href="#environment-variables">Environment Variables</a> •
   <a href="#contributing">Contributing</a> •
   <a href="#licensing">Licensing</a>
 </p>
@@ -174,6 +175,55 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+## Environment Variables
+
+This application requires specific environment variables for Keycloak integration. Create a `.env` file in the project root with the following variables:
+
+```bash
+# Keycloak Configuration
+VITE_KEYCLOAK_URL=https://your-keycloak-server-url
+VITE_KEYCLOAK_REALM=your-realm-name
+VITE_KEYCLOAK_CLIENT_ID=your-client-id
+```
+
+For convenience, a template file `.env.example` is provided in the repository. You can copy this file to create your own `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit the `.env` file with your specific Keycloak configuration values.
+
+### Required Variables
+
+- `VITE_KEYCLOAK_URL`: The URL of your Keycloak server (e.g., https://auth.example.com)
+- `VITE_KEYCLOAK_REALM`: The name of your Keycloak realm configured for EUDI Wallet integration
+- `VITE_KEYCLOAK_CLIENT_ID`: The client ID of your application registered in Keycloak
+
+### Docker Environment Variables
+
+When using Docker, you can either:
+
+1. Configure environment variables in your `docker-compose.yml`:
+   ```yaml
+   services:
+     app:
+       # ... other configuration
+       environment:
+         - VITE_KEYCLOAK_URL=https://your-keycloak-server-url
+         - VITE_KEYCLOAK_REALM=your-realm-name
+         - VITE_KEYCLOAK_CLIENT_ID=your-client-id
+   ```
+
+2. Or create a `.env` file and use Docker Compose's env_file option:
+   ```yaml
+   services:
+     app:
+       # ... other configuration
+       env_file:
+         - .env
+   ```
 
 ## ESLint Configuration
 
