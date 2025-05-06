@@ -15,23 +15,18 @@ import ProtectedPage from './pages/ProtectedPage';
 import { initKeycloak, isLoggedIn } from './services/keycloakService';
 
 function App() {
-  // Track if Keycloak has been initialized
   const [keycloakInitialized, setKeycloakInitialized] = useState(false);
-  // Track if user is authenticated
   const [authenticated, setAuthenticated] = useState(false);
 
   /**
    * Initialize Keycloak on component mount
    */
   useEffect(() => {
-    console.log('Initializing Keycloak...');
     initKeycloak()
       .then(() => {
-        console.log('Keycloak initialized successfully');
         setKeycloakInitialized(true);
-        // Check authentication immediately after initialization
+
         const authStatus = isLoggedIn();
-        console.log('Initial authentication status:', authStatus);
         setAuthenticated(authStatus);
       })
       .catch((error: unknown) => {
@@ -46,13 +41,9 @@ function App() {
   useEffect(() => {
     if (!keycloakInitialized) return;
     
-    console.log('Current URL pathname:', window.location.pathname);
-    
-    // Set up a periodic check of authentication status
     const checkAuthInterval = setInterval(() => {
       const currentStatus = isLoggedIn();
       if (currentStatus !== authenticated) {
-        console.log('Authentication status changed:', currentStatus);
         setAuthenticated(currentStatus);
       }
     }, 1000);
@@ -61,7 +52,6 @@ function App() {
   }, [keycloakInitialized, authenticated]);
 
   if (!keycloakInitialized) {
-    console.log('Keycloak still initializing, showing loading screen');
     return <div>Loading...</div>;
   }
 
@@ -74,18 +64,13 @@ function App() {
    * @returns {ReactElement} Rendered component or redirect
    */
   const PrivateRoute = ({ children, ...rest }: RouteProps & { children: ReactNode }) => {
-    console.log(`PrivateRoute called for path: ${rest.path}`);
     return (
       <Route
         {...rest}
         render={({ location }) => {
-          console.log(`User auth check for ${rest.path}: ${authenticated}`);
-          
           if (authenticated) {
-            console.log(`Rendering protected content for ${rest.path}`);
             return children;
           } else {
-            console.log(`Redirecting from ${rest.path} to /login`);
             return (
               <Redirect
                 to={{
@@ -100,7 +85,6 @@ function App() {
     );
   };
 
-  console.log('Rendering App component, auth status:', authenticated);
   return (
     <Router>
       <div className="app">

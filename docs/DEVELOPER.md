@@ -2,29 +2,29 @@
 
 ## Project Overview
 
-This project demonstrates a passwordless authentication flow using EUDI Wallets with Keycloak as an OpenID Connect provider. It allows users to authenticate using their digital wallet credentials instead of traditional username/password.
+This project demonstrates a passwordless authentication flow using EUDI Wallets with Keycloak as an OpenID Connect relying party (RP). It allows users to authenticate using their digital wallet credentials instead of traditional username/password.
 
 ## Project Structure
 
 ```
 passwordless-login/
-├── public/               # Static assets
-├── src/                  # Source code
-│   ├── assets/           # Application assets
-│   ├── components/       # React components
-│   │   └── AuthRedirect.tsx  # Component for handling auth redirects
-│   ├── pages/            # Page components
-│   │   ├── LoginPage.tsx     # Login page with EUDI Wallet login button
-│   │   └── ProtectedPage.tsx # Protected content for authenticated users
-│   ├── services/         # Service modules
-│   │   └── keycloakService.ts # Keycloak authentication service
-│   ├── App.tsx           # Main application component with routing
-│   ├── main.tsx          # Application entry point
-│   ├── index.css         # Global styles
-│   └── App.css           # Application-specific styles
-├── docs/                 # Documentation
-├── package.json          # Project dependencies and scripts
-└── vite.config.ts        # Vite configuration
+├── public/                     # Static assets
+├── src/                        # Source code
+│   ├── assets/                 # Application assets
+│   ├── components/             # React components
+│   │   └── AuthRedirect.tsx    # Component for handling auth redirects
+│   ├── pages/                  # Page components
+│   │   ├── LoginPage.tsx       # Login page with EUDI Wallet login button
+│   │   └── ProtectedPage.tsx   #  Protected content for authenticated users
+│   ├── services/               # Service modules
+│   │   └── keycloakService.ts  # Keycloak authentication service
+│   ├── App.tsx                 # Main application component with routing
+│   ├── main.tsx                # Application entry point
+│   ├── index.css               # Global styles
+│   └── App.css                 # Application-specific styles
+├── docs/                       # Documentation
+├── package.json                # Project dependencies and scripts
+└── vite.config.ts              # Vite configuration
 ```
 
 ## Authentication Flow
@@ -33,10 +33,10 @@ The authentication flow uses OpenID Connect with Keycloak and EUDI Wallets:
 
 1. **User Initiates Login**: User clicks the "Sign with EUDI Wallet" button on the login page
 2. **Keycloak Redirect**: The application redirects to Keycloak with the OIDC identity provider hint
-3. **EUDI Wallet Authentication**: Keycloak initiates the authentication flow with the EUDI Wallet
+3. **EUDI Wallet Authentication**: Keycloak initiates the EUDI Wallet authentication flow
 4. **Credential Verification**: The user presents their digital credentials from their wallet
-5. **Authentication Completion**: Upon successful verification, Keycloak issues tokens
-6. **Application Access**: The user is redirected back to the application with access tokens
+5. **Authentication Completion**: Upon successful verification, Keycloak issues a token
+6. **Application Access**: The user is redirected back to the application with claims
 7. **Protected Content**: The user can now access protected content
 
 ## Key Components
@@ -75,11 +75,11 @@ The application requires the following environment variables:
 - `VITE_KEYCLOAK_REALM`: Keycloak realm name
 - `VITE_KEYCLOAK_CLIENT_ID`: Client ID for the application in Keycloak
 
-These can be defined in a `.env` file at the project root.
+These can be defined in the `.env` file in the project root.
 
 ## Development Workflow
 
-1. **Setup Environment Variables**: Create a `.env` file with the required Keycloak configuration
+1. **Setup Environment Variables**: Modify the `.env` file with the required Keycloak configuration
 2. **Install Dependencies**: Run `npm install`
 3. **Start Development Server**: Run `npm run dev`
 4. **Build for Production**: Run `npm run build`
@@ -89,7 +89,6 @@ These can be defined in a `.env` file at the project root.
 - **Keycloak Configuration**: Ensure Keycloak is properly configured with the OIDC identity provider
 - **CORS Issues**: Check that Keycloak has the correct allowed origins and redirect URIs
 - **Token Expiration**: The application checks for token validity every second, but you may need to handle token refresh manually for long sessions
-- **Console Logs**: The application includes detailed console logs to help diagnose authentication issues
 
 ## Further Customization
 

@@ -15,7 +15,6 @@
                     window.location.href.indexOf('session_state') !== -1 && 
                     window.location.href.indexOf('code') !== -1) {
                     
-                    console.log('Silent authentication detected, redirecting to app');
                     window.location.href = '/';
                 }
             } catch (error) {

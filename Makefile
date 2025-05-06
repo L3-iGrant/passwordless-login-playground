@@ -12,23 +12,23 @@ build:
 
 # Run the application with Docker Compose
 run:
-	docker-compose up -d
+	docker compose up -d
 
-# Run in development mode (if you create a dev docker-compose file)
+# Run in development mode (if you create a dev docker compose file)
 dev:
-	docker-compose -f docker-compose.dev.yml up
+	docker compose -f docker compose.dev.yml up
 
 # Stop containers
 stop:
-	docker-compose down
+	docker compose down
 
 # Show logs
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 # Clean up unused Docker resources
 clean:
-	docker-compose down --rmi local
+	docker compose down --rmi local
 	docker system prune -f
 
 # Build and run without Docker Compose
@@ -38,10 +38,10 @@ build-run:
 
 # Run npm commands inside the container
 npm-install:
-	docker-compose run --rm app npm install
+	docker compose run --rm app npm install
 
 npm-build:
-	docker-compose run --rm app npm run build
+	docker compose run --rm app npm run build
 
 npm-lint:
-	docker-compose run --rm app npm run lint 
+	docker compose run --rm app npm run lint 

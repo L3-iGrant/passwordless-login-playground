@@ -45,7 +45,7 @@ export const initKeycloak = (() => {
         initPromise = keycloak.init({
             onLoad: 'check-sso',
             silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-            pkceMethod: 'S256' // Using PKCE for enhanced security
+            pkceMethod: 'S256'
         });
         
         return initPromise;
@@ -58,7 +58,7 @@ export const initKeycloak = (() => {
  */
 export const doLogin = () => {
     keycloak.login({
-        idpHint: 'oidc' // Indicates to use the OIDC identity provider configured in Keycloak
+        idpHint: 'oidc'
     });
 };
 
@@ -94,9 +94,7 @@ export const getToken = () => {
  * @returns {boolean} True if user is logged in, false otherwise
  */
 export const isLoggedIn = () => {
-    console.log('Checking if user is logged in');
     const isAuthenticated = !!keycloak.token;
-    console.log('User authentication status:', isAuthenticated);
     return isAuthenticated;
 };
 

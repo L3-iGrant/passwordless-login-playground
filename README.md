@@ -44,7 +44,7 @@ To build and run the application using Docker:
 
 ```bash
 # Build and run with Docker Compose
-docker-compose up -d
+docker compose up -d
 
 # Or build and run manually
 docker build -t passwordless-login .
@@ -59,7 +59,7 @@ For development with hot-reloading, you can create a development Docker configur
 
 ```bash
 # If using Docker Compose
-docker-compose down
+docker compose down
 
 # Or manually stop the container
 docker stop <container_id>
@@ -97,69 +97,6 @@ make npm-build
 make npm-lint
 ```
 
-## Implementation Guide: Passwordless Login with EUDI Wallets
-
-This section guides you through the process of integrating iGrant.io's OpenID Connect extension with Keycloak to enable passwordless login using the EUDI Wallet.
-
-### Step 1: Enable the OpenID Connect Extension
-
-As an organisation administrator:
-1. Access the iGrant.io Extensions API documentation.
-2. Use the API to enable the OIDC extension.
-3. Upon enabling, the response will include the OpenID Connect metadata discovery URL (/.well-known/openid-configuration).
-
-### Step 2: Create an OpenID Client
-
-You will need the following from Keycloak:
-- Redirect URI
-- Allowed origin (based on the redirect URI's domain)
-
-Note: The Redirect URI is found in step 3 when configuring the Identity Provider.
-
-Use these details when calling the iGrant.io API to create a new OpenID client. This step will return:
-- Client ID
-- Client Secret
-
-Save these credentials for the Keycloak configuration.
-
-### Step 3: Configure Keycloak to Use iGrant.io as an OpenID Provider
-
-1. Log in to your Keycloak admin console.
-2. Navigate to Identity Providers > Add provider > OpenID Connect v1.0.
-3. Enter the following details:
-   - Alias: e.g. igrant
-   - Client ID: (from step 2)
-   - Client Secret: (from step 2)
-   - Discovery endpoint: Paste the metadata discovery URL from step 1
-
-If the discovery endpoint cannot be used directly, retrieve individual endpoints (authorisation, token, userinfo, and JWKS) from the metadata URL in the browser and configure them manually.
-
-Make sure Client Authentication is set to "Client Secret sent as basic auth" (show metadata > Client Authentication).
-
-**Important Note: Presentation Definition**
-Ensure the presentation definition is properly defined before linking the client to it. Once a client is linked to a presentation definition, it cannot be modified.
-
-### Step 4: Create a Custom Authentication Flow in Keycloak
-
-1. Go to Authentication > Flows.
-2. Create a new flow, e.g., "Login with EUDI Wallet".
-3. Add execution steps required for OpenID Connect-based login.
-4. Mark each step as required to enforce proper validation.
-5. Save the flow.
-
-Alternatively, add these steps to your current login flow.
-
-### Step 5: Update the Authentication Flow and Sync Mode in Keycloak
-
-Configure your Keycloak realm to use the new authentication flow.
-
-### Step 6: Integrate with this React Application
-
-This application demonstrates how to implement this login flow:
-1. Uses the EUDI Wallet login button in the React frontend.
-2. Redirects to the Keycloak login endpoint, which includes the iGrant.io identity provider.
-3. Upon successful authentication, Keycloak issues the appropriate tokens to your application.
-
 ## Development Setup
 
 ```bash
@@ -187,25 +124,11 @@ VITE_KEYCLOAK_REALM=your-realm-name
 VITE_KEYCLOAK_CLIENT_ID=your-client-id
 ```
 
-For convenience, a template file `.env.example` is provided in the repository. You can copy this file to create your own `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-Then edit the `.env` file with your specific Keycloak configuration values.
-
-### Required Variables
-
-- `VITE_KEYCLOAK_URL`: The URL of your Keycloak server (e.g., https://auth.example.com)
-- `VITE_KEYCLOAK_REALM`: The name of your Keycloak realm configured for EUDI Wallet integration
-- `VITE_KEYCLOAK_CLIENT_ID`: The client ID of your application registered in Keycloak
-
 ### Docker Environment Variables
 
 When using Docker, you can either:
 
-1. Configure environment variables in your `docker-compose.yml`:
+1. Configure environment variables in your `docker compose.yml`:
    ```yaml
    services:
      app:
