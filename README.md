@@ -47,7 +47,7 @@ docker-compose up -d
 
 # Or build and run manually
 docker build -t passwordless-login .
-docker run -p 80:80 passwordless-login
+docker run -p 5174:80 passwordless-login
 ```
 
 ### Development with Docker
