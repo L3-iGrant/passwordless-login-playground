@@ -1,8 +1,26 @@
-# Passwordless Login with EUDI Wallets
+<h1 align="center">
+    Passwordless Login with EUDI Wallets
+</h1>
+
+<p align="center">
+    <a href="/../../commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/iGrant.io/passwordless-login?style=flat"></a>
+    <a href="/../../issues" title="Open Issues"><img src="https://img.shields.io/github/issues/iGrant.io/passwordless-login?style=flat"></a>
+    <a href="./LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-yellowgreen?style=flat"></a>
+</p>
+
+<p align="center">
+  <a href="#about">About</a> •
+  <a href="#technical-stack">Technical Stack</a> •
+  <a href="#docker-support">Docker Support</a> •
+  <a href="#implementation-guide-passwordless-login-with-eudi-wallets">Implementation Guide</a> •
+  <a href="#development-setup">Development Setup</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#licensing">Licensing</a>
+</p>
+
+## About
 
 This project serves as a playground for developers to understand how to integrate passwordless authentication in real-world frontend applications using EUDI Wallets with the OpenID Connect Extension.
-
-## Overview
 
 By enabling the OpenID Connect extension in the iGrant.io Organisation Wallet and configuring Keycloak as a relying party (RP), organisations can allow users to log in without a password using their digital wallet credentials.
 
@@ -160,3 +178,15 @@ npm run preview
 ## ESLint Configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules. See the [ESLint documentation](https://eslint.org/) for more details.
+
+## Contributing
+
+Feel free to improve the project and send us a pull request. If you find any problems, please create an issue in this repository.
+
+## Licensing
+
+Copyright (c) 2023-25 LCubed AB (iGrant.io), Sweden
+
+Licensed under the Apache 2.0 License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the LICENSE for the specific language governing permissions and limitations under the License.

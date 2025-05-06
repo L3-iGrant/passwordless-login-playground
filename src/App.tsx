@@ -1,3 +1,10 @@
+/**
+ * Main Application Component
+ * 
+ * This component handles the application's routing and authentication state.
+ * It initializes Keycloak and provides route protection based on authentication status.
+ */
+
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import type { ReactNode } from 'react';
@@ -8,9 +15,14 @@ import ProtectedPage from './pages/ProtectedPage';
 import { initKeycloak, isLoggedIn } from './services/keycloakService';
 
 function App() {
+  // Track if Keycloak has been initialized
   const [keycloakInitialized, setKeycloakInitialized] = useState(false);
+  // Track if user is authenticated
   const [authenticated, setAuthenticated] = useState(false);
 
+  /**
+   * Initialize Keycloak on component mount
+   */
   useEffect(() => {
     console.log('Initializing Keycloak...');
     initKeycloak()
@@ -28,7 +40,9 @@ function App() {
       });
   }, []);
 
-  // Regularly check auth status after initialization
+  /**
+   * Periodically check authentication status after Keycloak is initialized
+   */
   useEffect(() => {
     if (!keycloakInitialized) return;
     
@@ -51,7 +65,14 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  // Function to protect routes
+  /**
+   * PrivateRoute Component
+   * 
+   * A wrapper for Route that redirects to the login page if user is not authenticated.
+   * 
+   * @param {Object} props - Component props including children and route props
+   * @returns {ReactElement} Rendered component or redirect
+   */
   const PrivateRoute = ({ children, ...rest }: RouteProps & { children: ReactNode }) => {
     console.log(`PrivateRoute called for path: ${rest.path}`);
     return (

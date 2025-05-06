@@ -1,6 +1,19 @@
+/**
+ * Protected Page Component
+ * 
+ * This component renders content that is only accessible to authenticated users.
+ * It includes a logout button that triggers the Keycloak logout flow.
+ * This page is protected by the PrivateRoute in App.tsx.
+ */
+
 import { doLogout } from '../services/keycloakService';
 import '../App.css';
 
+/**
+ * Renders the protected page that requires authentication
+ * 
+ * @returns {JSX.Element} The rendered protected page
+ */
 const ProtectedPage = () => {
 
   return (
