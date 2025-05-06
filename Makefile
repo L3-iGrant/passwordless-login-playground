@@ -34,7 +34,7 @@ clean:
 # Build and run without Docker Compose
 build-run:
 	docker build -t $(APP_NAME) .
-	docker run -d -p 80:80 --name $(APP_NAME) $(APP_NAME)
+	docker run -d -p 5174:80 --name $(APP_NAME) $(APP_NAME)
 
 # Run npm commands inside the container
 npm-install:
