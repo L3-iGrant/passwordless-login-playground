@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Silent SSO Check</title>
+    <script>
+        // This page is used by Keycloak to silently check for SSO sessions
+        parent.postMessage(location.href, location.origin);
+
+        // Add redirection after successful authentication
+        window.onload = function() {
+            try {
+                // Check if we have authentication data in the URL
+                if (window.location.href.indexOf('state') !== -1 && 
+                    window.location.href.indexOf('session_state') !== -1 && 
+                    window.location.href.indexOf('code') !== -1) {
+                    
+                    console.log('Silent authentication detected, redirecting to app');
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Error in silent-check-sso redirect:', error);
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- This page is intentionally left blank -->
+</body>
+</html> 
