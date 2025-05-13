@@ -12,11 +12,12 @@ import type { RouteProps } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
-import { initKeycloak, isLoggedIn } from './services/keycloakService';
+import { initKeycloak, isLoggedIn, getUserInfo } from './services/keycloakService';
 
 function App() {
   const [keycloakInitialized, setKeycloakInitialized] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState<Keycloak.KeycloakProfile>({});
 
   /**
    * Initialize Keycloak on component mount
@@ -36,7 +37,7 @@ function App() {
   }, []);
 
   /**
-   * Periodically check authentication status after Keycloak is initialized
+   * Periodically check authentication status after Keycloak is initialized.
    */
   useEffect(() => {
     if (!keycloakInitialized) return;
@@ -49,6 +50,23 @@ function App() {
     }, 1000);
     
     return () => clearInterval(checkAuthInterval);
+  }, [keycloakInitialized, authenticated]);
+
+  /**
+   * Fetch user info when authenticated
+   * 
+   * This effect runs only once when the authentication status changes to true.
+   */
+  useEffect(() => {
+    if (!keycloakInitialized) return;
+  
+    if (authenticated) {
+      getUserInfo()
+        .then(profile => setUserInfo(profile))
+        .catch(err => console.error(err));
+    }
+
+    console.log('User info:', userInfo);
   }, [keycloakInitialized, authenticated]);
 
   if (!keycloakInitialized) {
@@ -93,7 +111,7 @@ function App() {
             {authenticated ? <Redirect to="/dashboard" /> : <LoginPage />}
           </Route>
           <PrivateRoute path="/dashboard">
-            <ProtectedPage />
+            <ProtectedPage profile={userInfo} />
           </PrivateRoute>
           <Route exact path="/">
             {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}

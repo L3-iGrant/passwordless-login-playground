@@ -15,7 +15,8 @@ import Keycloak from "keycloak-js";
 const keycloakConfig = {
     url: import.meta.env.VITE_KEYCLOAK_URL,
     realm: import.meta.env.VITE_KEYCLOAK_REALM,
-    clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID
+    clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
+    idpHint: import.meta.env.VITE_KEYCLOAK_IDP_HINT
 };
 
 // Initialize Keycloak instance
@@ -58,7 +59,7 @@ export const initKeycloak = (() => {
  */
 export const doLogin = () => {
     keycloak.login({
-        idpHint: 'oidc'
+        idpHint: keycloakConfig.idpHint
     });
 };
 
@@ -107,3 +108,18 @@ export const isLoggedIn = () => {
 export const updateToken = (minValidity: number) => {
     return keycloak.updateToken(minValidity);
 };
+
+/**
+ * Retrieves the user's profile information from Keycloak.
+ * 
+ * @returns {Promise<KeycloakProfile>} Promise resolving to the user's profile
+ */
+export const getUserInfo = async () => {
+    try {
+        const userInfo = await keycloak.loadUserProfile();
+        return userInfo;
+    } catch (error) {
+        console.error('Failed to load user info:', error);
+        throw error;
+    }
+}

@@ -12,9 +12,10 @@
   <a href="#about">About</a> •
   <a href="#technical-stack">Technical Stack</a> •
   <a href="#docker-support">Docker Support</a> •
-  <a href="#implementation-guide-passwordless-login-with-eudi-wallets">Implementation Guide</a> •
+  <a href="#implementation-guide">Implementation Guide</a> •
   <a href="#development-setup">Development Setup</a> •
   <a href="#environment-variables">Environment Variables</a> •
+  <a href="#eslint-configuration">Environment Variables</a> •
   <a href="#contributing">Contributing</a> •
   <a href="#licensing">Licensing</a>
 </p>
@@ -65,7 +66,7 @@ docker compose down
 docker stop <container_id>
 ```
 
-## Makefile Support
+### Makefile Support
 
 This project includes a Makefile for easier Docker operations:
 
@@ -97,6 +98,26 @@ make npm-build
 make npm-lint
 ```
 
+## Implementation Guide
+
+### Configuring a Keycloak Client
+
+1. In the Keycloak admin console navigate to **Clients** > **Create client**.
+
+2. Set a **Client ID** (e.g. `React`) and proceed to the next step.
+   
+![Create Keycloak Client – Step 1](images/client1.png)
+
+3. Leave these settings to their defaults (as seen in the image), proceed to the next step.  
+
+![Client Keycloak Client – Step 2](images/client2.png)
+
+4. Set the following values:
+- **Valid redirect URIs**: `http://localhost:5174/login`:
+- **Web origins**: `http://localhost:5174`:
+
+![Client Keycloak Client – Step 3](images/client3.png)
+
 ## Development Setup
 
 ```bash
@@ -115,13 +136,14 @@ npm run preview
 
 ## Environment Variables
 
-This application requires specific environment variables for Keycloak integration. Create a `.env` file in the project root with the following variables:
+This application requires specific environment variables for Keycloak integration. Modify the `.env` file in the project root with the following variables:
 
 ```bash
 # Keycloak Configuration
 VITE_KEYCLOAK_URL=https://your-keycloak-server-url
 VITE_KEYCLOAK_REALM=your-realm-name
 VITE_KEYCLOAK_CLIENT_ID=your-client-id
+VITE_KEYCLOAK_IDP_HINT=your-idp-alias
 ```
 
 ### Docker Environment Variables
@@ -137,6 +159,7 @@ When using Docker, you can either:
          - VITE_KEYCLOAK_URL=https://your-keycloak-server-url
          - VITE_KEYCLOAK_REALM=your-realm-name
          - VITE_KEYCLOAK_CLIENT_ID=your-client-id
+         - VITE_KEYCLOAK_IDP_HINT=your-idp-alias
    ```
 
 2. Or create a `.env` file and use Docker Compose's env_file option:

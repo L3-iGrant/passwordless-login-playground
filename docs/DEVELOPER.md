@@ -32,7 +32,7 @@ passwordless-login/
 The authentication flow uses OpenID Connect with Keycloak and EUDI Wallets:
 
 1. **User Initiates Login**: User clicks the "Sign with EUDI Wallet" button on the login page
-2. **Keycloak Redirect**: The application redirects to Keycloak with the OIDC identity provider hint
+2. **Keycloak Redirect**: The application redirects to the configured Keycloak Client with the OIDC identity provider hint
 3. **EUDI Wallet Authentication**: Keycloak initiates the EUDI Wallet authentication flow
 4. **Credential Verification**: The user presents their digital credentials from their wallet
 5. **Authentication Completion**: Upon successful verification, Keycloak issues a token
@@ -48,6 +48,7 @@ This service manages all Keycloak-related functionality:
 - **Initialization**: Sets up the Keycloak instance and initializes it
 - **Authentication**: Provides methods for login and logout
 - **Token Management**: Handles token retrieval and status checking
+-- **Claims**: Keycloak's `loadUserProfile` allows for the retrieval of claims
 
 ### `App.tsx`
 
@@ -74,6 +75,7 @@ The application requires the following environment variables:
 - `VITE_KEYCLOAK_URL`: URL of the Keycloak server
 - `VITE_KEYCLOAK_REALM`: Keycloak realm name
 - `VITE_KEYCLOAK_CLIENT_ID`: Client ID for the application in Keycloak
+- `VITE_KEYCLOAK_IDP_HINT`: Name of the IdP
 
 These can be defined in the `.env` file in the project root.
 
