@@ -48,7 +48,7 @@ This service manages all Keycloak-related functionality:
 - **Initialization**: Sets up the Keycloak instance and initializes it
 - **Authentication**: Provides methods for login and logout
 - **Token Management**: Handles token retrieval and status checking
--- **Claims**: Keycloak's `loadUserProfile` allows for the retrieval of claims
+- **Claims**: Keycloak's `loadUserProfile` allows for the retrieval of claims
 
 ### `App.tsx`
 
