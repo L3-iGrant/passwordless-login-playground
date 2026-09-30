@@ -15,7 +15,7 @@
   <a href="#implementation-guide">Implementation Guide</a> •
   <a href="#development-setup">Development Setup</a> •
   <a href="#environment-variables">Environment Variables</a> •
-  <a href="#eslint-configuration">Environment Variables</a> •
+  <a href="#eslint-configuration">ESLint Configuration</a> •
   <a href="#contributing">Contributing</a> •
   <a href="#licensing">Licensing</a>
 </p>
@@ -100,23 +100,25 @@ make npm-lint
 
 ## Implementation Guide
 
+First create the OpenID Connect client in the Passwordless Login extension of iGrant.io and add iGrant.io as an identity provider in Keycloak, as described in the [Passwordless Login with EUDI Wallets](https://docs.igrant.io/docs/eudi-passwordless-login-flow/) guide.
+
 ### Configuring a Keycloak Client
 
 1. In the Keycloak admin console navigate to **Clients** > **Create client**.
 
 2. Set a **Client ID** (e.g. `React`) and proceed to the next step.
    
-![Create Keycloak Client – Step 1](images/client1.png)
+![Create Keycloak Client - Step 1](images/client1.png)
 
 3. Leave these settings to their defaults (as seen in the image), proceed to the next step.  
 
-![Client Keycloak Client – Step 2](images/client2.png)
+![Create Keycloak Client - Step 2](images/client2.png)
 
 4. Set the following values:
 - **Valid redirect URIs**: `http://localhost:5174/login`:
 - **Web origins**: `http://localhost:5174`:
 
-![Client Keycloak Client – Step 3](images/client3.png)
+![Create Keycloak Client - Step 3](images/client3.png)
 
 ## Development Setup
 
